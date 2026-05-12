@@ -1,79 +1,44 @@
-# GRE over IPSec VPN Lab (RHEL 9)
+# Secure GRE over IPsec Site-to-Site VPN Lab
 
 ## Overview
+This project implements a secure site-to-site VPN using GRE tunnels protected by IPsec encryption. It simulates enterprise-style connectivity between two remote networks over an untrusted transport network.
 
-This project demonstrates a GRE-over-IPSec VPN tunnel built on RHEL 9 using Linux networking primitives. The lab simulates two endpoints using network namespaces and connects them through a veth pair, then applies GRE tunneling protected by IPSec ESP using Linux XFRM.
-
----
-
-## Lab Architecture
-
-- Two network namespaces: `left` and `right`
-- veth pair simulating a physical link
-- GRE tunnel between endpoints
-- IPSec ESP encryption using XFRM
-- Static lab routing using private IP space
+The design combines:
+- GRE for dynamic routing over a virtual point-to-point tunnel
+- IPsec for confidentiality, integrity, and authentication of traffic
 
 ---
 
-## Technologies Used
+## Architecture Summary
+Two remote LANs are connected through a simulated WAN environment. A GRE tunnel provides logical connectivity for routing protocols, while IPsec secures all tunnel traffic between endpoints.
 
-- RHEL 9 Linux
-- Linux Network Namespaces
-- veth interfaces
-- GRE tunneling
-- IPSec ESP (XFRM framework)
-- Bash scripting
-- systemd concepts
-- PKI concepts (certificate-based authentication theory)
+(See `/architecture/topology.png`)
 
 ---
 
-## Project Structure
-
-```text id="v9q1lm"
-gre-ipsec-lab/
-├── scripts/        Setup, verification, cleanup scripts
-├── docs/           Technical explanations and theory
-├── output/         Command outputs and verification logs
-├── diagrams/       Architecture explanation
-├── screenshots/    Proof of execution (optional)
-``` id="q2m8pw"
+## Core Technologies
+- GRE Tunnels
+- IPsec (IKE Phase 1 & Phase 2)
+- Cisco IOS (GNS3 / Packet Tracer / EVE-NG)
+- Static routing / OSPF (depending on implementation)
 
 ---
 
-## Verification Steps
-
-The lab was validated using:
-
-- Namespace creation checks
-- veth connectivity tests (ping)
-- GRE tunnel connectivity tests
-- XFRM state inspection
-- XFRM policy verification
+## Key Skills Demonstrated
+- Secure VPN design and implementation
+- IPsec encryption configuration and troubleshooting
+- GRE tunneling for routing extension
+- Network validation and diagnostic analysis
+- End-to-end connectivity verification
 
 ---
 
-## Key Concepts Demonstrated
+## Validation Strategy
+This project includes structured validation to confirm correct operation:
 
-- GRE encapsulation vs IPSec encryption
-- Linux XFRM Security Associations vs Policies
-- Kernel-level packet transformation
-- Namespace-based network isolation
-- Persistence limitations in Linux networking labs
+- LAN-to-LAN connectivity tests
+- IPsec Security Association verification
+- GRE tunnel interface validation
+- Routing table verification
 
----
-
-## Key Takeaways
-
-- GRE provides tunneling but no encryption
-- IPSec ESP provides encryption and integrity protection
-- XFRM enforces kernel-level IPSec policy
-- Network namespaces simulate real multi-host environments
-- Clear documentation is as important as implementation
-
----
-
-## Security Notes
-
-This lab uses static keys and simplified configurations for educational purposes only. Production IPSec deployments should use IKE, certificate-based authentication, key rotation, and proper policy management.
+See `/validation` for test cases and expected outputs.
