@@ -1,29 +1,79 @@
-# GRE over IPSec Lab on RHEL 9
+# GRE over IPSec VPN Lab (RHEL 9)
 
 ## Overview
 
-This project documents a GRE-over-IPSec lab built on a RHEL 9 Linux host.
+This project demonstrates a GRE-over-IPSec VPN tunnel built on RHEL 9 using Linux networking primitives. The lab simulates two endpoints using network namespaces and connects them through a veth pair, then applies GRE tunneling protected by IPSec ESP using Linux XFRM.
 
-The lab uses Linux network namespaces to simulate two isolated VPN endpoints on one system. The endpoints are connected with a virtual Ethernet pair, a GRE tunnel is built between them, and GRE traffic is protected with IPSec ESP using Linux XFRM.
+---
 
-A second phase adds boot persistence with systemd, persistent kernel parameter tuning with sysctl, and certificate-based IPSec authentication using a local Certificate Authority.
+## Lab Architecture
 
-## Why I Built This
+- Two network namespaces: `left` and `right`
+- veth pair simulating a physical link
+- GRE tunnel between endpoints
+- IPSec ESP encryption using XFRM
+- Static lab routing using private IP space
 
-I built this lab to better understand how tunneling, IPSec encryption, Linux networking, and VPN authentication work below the GUI layer.
+---
 
-## Architecture
+## Technologies Used
 
-```text
-+-----------------------------+             +-----------------------------+
-| left namespace              |             | right namespace             |
-|                             |             |                             |
-| veth-left: 192.168.100.1    |<----------->| veth-right: 192.168.100.2   |
-|                             |  veth pair  |                             |
-| gre1: 10.0.0.1              |<===========>| gre1: 10.0.0.2              |
-|                             | GRE tunnel  |                             |
-+-----------------------------+             +-----------------------------+
+- RHEL 9 Linux
+- Linux Network Namespaces
+- veth interfaces
+- GRE tunneling
+- IPSec ESP (XFRM framework)
+- Bash scripting
+- systemd concepts
+- PKI concepts (certificate-based authentication theory)
 
-GRE traffic between the two namespace endpoints is protected with IPSec ESP.
+---
 
-This lab uses a static demonstration key for manual XFRM configuration. It is not intended for production use. Production IPSec deployments should use proper IKE negotiation, key rotation, and certificate-based authentication.
+## Project Structure
+
+```text id="v9q1lm"
+gre-ipsec-lab/
+├── scripts/        Setup, verification, cleanup scripts
+├── docs/           Technical explanations and theory
+├── output/         Command outputs and verification logs
+├── diagrams/       Architecture explanation
+├── screenshots/    Proof of execution (optional)
+``` id="q2m8pw"
+
+---
+
+## Verification Steps
+
+The lab was validated using:
+
+- Namespace creation checks
+- veth connectivity tests (ping)
+- GRE tunnel connectivity tests
+- XFRM state inspection
+- XFRM policy verification
+
+---
+
+## Key Concepts Demonstrated
+
+- GRE encapsulation vs IPSec encryption
+- Linux XFRM Security Associations vs Policies
+- Kernel-level packet transformation
+- Namespace-based network isolation
+- Persistence limitations in Linux networking labs
+
+---
+
+## Key Takeaways
+
+- GRE provides tunneling but no encryption
+- IPSec ESP provides encryption and integrity protection
+- XFRM enforces kernel-level IPSec policy
+- Network namespaces simulate real multi-host environments
+- Clear documentation is as important as implementation
+
+---
+
+## Security Notes
+
+This lab uses static keys and simplified configurations for educational purposes only. Production IPSec deployments should use IKE, certificate-based authentication, key rotation, and proper policy management.
