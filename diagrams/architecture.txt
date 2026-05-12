@@ -1,0 +1,19 @@
+GRE over IPSec Lab Architecture
+
++-----------------------------+             +-----------------------------+
+| left namespace              |             | right namespace             |
+|                             |             |                             |
+| veth-left: 192.168.100.1    |<----------->| veth-right: 192.168.100.2   |
+|                             |  veth pair  |                             |
+| gre1: 10.0.0.1              |<===========>| gre1: 10.0.0.2              |
+|                             | GRE tunnel  |                             |
++-----------------------------+             +-----------------------------+
+
+Underlay network:
+192.168.100.1 <-> 192.168.100.2
+
+Tunnel network:
+10.0.0.1 <-> 10.0.0.2
+
+Protection:
+GRE protocol 47 traffic is encrypted with IPSec ESP using Linux XFRM.

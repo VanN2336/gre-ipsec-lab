@@ -1,0 +1,8 @@
+src 192.168.100.2/32 dst 192.168.100.1/32 proto gre 
+	dir in priority 0 ptype main 
+	tmpl src 192.168.100.2 dst 192.168.100.1
+		proto esp reqid 0 mode transport
+src 192.168.100.1/32 dst 192.168.100.2/32 proto gre 
+	dir out priority 0 ptype main 
+	tmpl src 192.168.100.1 dst 192.168.100.2
+		proto esp reqid 0 mode transport

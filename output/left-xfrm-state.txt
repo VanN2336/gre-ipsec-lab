@@ -1,0 +1,16 @@
+src 192.168.100.2 dst 192.168.100.1
+	proto esp spi 0x00001002 reqid 0 mode transport
+	replay-window 0 
+	auth-trunc hmac(sha256) 0x0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20 96
+	enc cbc(aes) 0x0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20
+	lastused 2026-05-07 14:31:54
+	anti-replay context: seq 0x0, oseq 0x0, bitmap 0x00000000
+	sel src 0.0.0.0/0 dst 0.0.0.0/0 
+src 192.168.100.1 dst 192.168.100.2
+	proto esp spi 0x00001001 reqid 0 mode transport
+	replay-window 0 
+	auth-trunc hmac(sha256) 0x0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20 96
+	enc cbc(aes) 0x0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20
+	lastused 2026-05-07 14:31:54
+	anti-replay context: seq 0x0, oseq 0xd, bitmap 0x00000000
+	sel src 0.0.0.0/0 dst 0.0.0.0/0 
